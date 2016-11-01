@@ -1,0 +1,2 @@
+# java_ee_BookManagementSystem
+2016-2017第一学期java ee期末作业，基于struts2的图书管理系统
