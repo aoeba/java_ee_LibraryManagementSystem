@@ -9,7 +9,13 @@
 </head>
 <body>
 <div id="login">
+<s:form action="login" method="post">
+<s:textfield name="u_user.id" label="账号"></s:textfield>
+<s:textfield name="u_user.password" label="密码"></s:textfield>
 
+<s:select list="#{1:'普通用户',2:'图书管理员',3:'系统管理员'}" name="u_user.type" label="角色"></s:select>
+<s:submit value="登录"></s:submit>
+</s:form>
 </div>
 </body>
 </html>

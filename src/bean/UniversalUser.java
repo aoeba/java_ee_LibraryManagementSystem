@@ -4,6 +4,13 @@ public class UniversalUser {
 	private String name;
 	private int id;    //用户id
 	private int type;  //类型，1：普通用户，2：图书管理员，3：系统管理员
+	private String password;
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getName() {
 		return name;
 	}

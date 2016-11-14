@@ -1,9 +1,2 @@
-/struts.xml
-/struts2.xml
-/struts3.xml
-/struts4.xml
-/struts-user.xml
-/struts-sysadmin.xml
-/struts-bookadmin.xml
-/bean/
 /action/
+/bean/
