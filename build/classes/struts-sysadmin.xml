@@ -2,8 +2,18 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="sysadmin" extends="struts-default">
+		<interceptors>
+			<interceptor name="LoginInterceptor" class="interceptor.LoginInterceptor">
+			</interceptor>
+		</interceptors>
 		<action name="login" class="action.LoginAction">
-			<result name="success">index.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="LoginInterceptor"></interceptor-ref>
+			<result type="redirectAction">${praPage}</result>
+			<result name="success" type="redirectAction">success</result>
+		</action>
+		<action name="login2" class="action.LoginAction">
+			
 		</action>
 	</package>
 </struts>    
