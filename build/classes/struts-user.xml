@@ -2,5 +2,13 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="user" extends="struts-default">
+		<action name="check" class="action.CheckAction">
+		<result name="success">/index.jsp</result>
+		<result name="error">/error.jsp</result>
+		</action>
+		<action name="*" class="action.CheckAction" method="{1}">
+		<result name="success">/index.jsp</result>
+		<result name="error">/error.jsp</result>
+		</action>
 	</package>
 </struts>    
