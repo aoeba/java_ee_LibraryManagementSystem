@@ -28,7 +28,7 @@
 	position: absolute;
 	top: 30%;
 	width: 260px;
-	height: 120px;
+	height: 115px;
 	background-color: #ccc;
 	width: 260px;
 	z-index: 10;
@@ -36,8 +36,8 @@
 
 #closeLogin {
 	position: absolute;
-	top: 7px;
 	right: 10px;
+	top: 7px;
 }
 
 #back {
@@ -59,12 +59,17 @@
 	<div align="center">
 		<div style="width: 0px; height: 0px;">
 			<div id="login" align="center" style="display: none;">
-				<s:form action="login" method="post">
+				<s:form action="login" >
 					<s:textfield name="u_user.id" label="账号"></s:textfield>
 					<s:textfield name="u_user.password" label="密码"></s:textfield>
 					<s:select list="#{1:'普通用户',2:'图书管理员',3:'系统管理员'}" name="u_user.type"
 						label="角色"></s:select>
-					<s:submit value="登录" onclick=""></s:submit>
+					<%String url =request.getRequestURI();
+					session.setAttribute("prePage", url);
+					%>
+					<s:set name="prePage" value="#session.prePage"></s:set>
+					<s:hidden name="prePage" value="%{prePage}" ></s:hidden>
+					<s:submit value="登录"></s:submit>
 				</s:form>
 				<a href="javascript:closeLogin();" id="closeLogin">关闭</a>
 			</div>
@@ -89,7 +94,7 @@
 				%>
 				<span
 					style="font-size: 20px; color: red; position: relative; top: 93px; text-align: right;">
-					你好,<%=u_user.getName()%>,<a href="#">个人信息</a>！
+					你好,<a href="#"><%=u_user.getName()%></a>！
 				</span>
 				<%
 					}
@@ -109,7 +114,7 @@
 				%>
 				<span
 					style="font-size: 20px; color: red; position: relative; top: 93px; text-align: right;">
-					你好,<%=u_user.getName()%>,<a href="#">管理后台</a>！
+					你好,<%=u_user.getName()%>,<a href="sysManage.jsp">管理后台</a>！
 				</span>
 				<%
 					}

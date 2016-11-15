@@ -1,9 +1,16 @@
 package action;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.ServletActionContext;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import bean.UniversalUser;
+import lmsDB.UserLoginDB;
 
 public class LoginAction extends ActionSupport{
 	private UniversalUser u_user;
@@ -38,5 +45,15 @@ public class LoginAction extends ActionSupport{
 		return ActionSupport.SUCCESS;
 		
 		//return null;
+	}
+	
+	public String login() throws IOException{
+		System.out.println(u_user.getId()+" "+u_user.getType()+" "+prePage);
+		if(UserLoginDB.getLoginResult(u_user)){
+			ActionContext.getContext().getSession().put("u_user", u_user);
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.sendRedirect(prePage); 
+		}
+		return "error";
 	}
 }

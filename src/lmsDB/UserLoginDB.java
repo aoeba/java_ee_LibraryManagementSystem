@@ -1,18 +1,40 @@
 package lmsDB;
 
+import java.sql.ResultSet;
+
+import bean.UniversalUser;
+
 public class UserLoginDB extends Comdb {
 
-	public boolean getLoginResult(int type){
-		String sql;
-		if(type==1){
-			sql="select user_id,password from user";
+	public static boolean getLoginResult(UniversalUser user){
+		String sql=null;
+		boolean isLogin=false;
+		if(user.getType()==1){
+			sql="select password,user_name from user where user_id="+user.getId();
 		}
-		if(type==2){
-			sql="select manager_id,password from book_admin";
+		if(user.getType()==2){
+			sql="select password,manager_name from book_admin where manager_id="+user.getId();
 		}
-		if(type==3){
-			sql="select user_id,password from user";
+		if(user.getType()==3){
+			sql="select password,manager_name from sys_admin where manager_id="+user.getId();
 		}
-		return false;
+		try {
+			getConn();
+			ResultSet resultSet=select(sql, null);
+			while(resultSet.next()){
+				String password=resultSet.getString("password");
+				if(user.getPassword().equals(password)){
+					isLogin=true;
+					if(user.getType()==1){
+						user.setName(resultSet.getString("user_name"));
+					}else
+						user.setName(resultSet.getString("manager_name"));
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isLogin;
 	}
 }

@@ -6,14 +6,14 @@
 			<interceptor name="LoginInterceptor" class="interceptor.LoginInterceptor">
 			</interceptor>
 		</interceptors>
-		<action name="login" class="action.LoginAction">
+		<action name="login2" class="action.LoginAction">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 			<interceptor-ref name="LoginInterceptor"></interceptor-ref>
 			<result type="redirectAction">${praPage}</result>
 			<result name="success" type="redirectAction">success</result>
 		</action>
-		<action name="login2" class="action.LoginAction">
-			
+		<action name="login" class="action.LoginAction" method="login">
+			<result name="error">index.jsp</result>
 		</action>
 	</package>
 </struts>    
