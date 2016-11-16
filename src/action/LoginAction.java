@@ -51,8 +51,10 @@ public class LoginAction extends ActionSupport{
 		System.out.println(u_user.getId()+" "+u_user.getType()+" "+prePage);
 		if(UserLoginDB.getLoginResult(u_user)){
 			ActionContext.getContext().getSession().put("u_user", u_user);
-			HttpServletResponse response = ServletActionContext.getResponse();
-			response.sendRedirect(prePage); 
+			if(prePage!=null){
+				HttpServletResponse response = ServletActionContext.getResponse();
+				response.sendRedirect(prePage); 
+			}
 		}
 		return "error";
 	}

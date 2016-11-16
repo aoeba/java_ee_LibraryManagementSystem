@@ -16,11 +16,31 @@
 		document.getElementById("login").style.display = "none";
 		document.getElementById("back").style.display = "none";
 	}
+	function prePageStr() {
+		var url=window.location.href;
+		var parPage=document.getElementById("parPage");
+		parPage.value=url;
+	}
 </script>
 <style type="text/css">
 * {
 	margin: 0;
 	border: 0;
+}
+#top{
+	
+}
+#allBack {
+	position: absolute;
+	top: 120px;
+	z-index: -10px;
+	width: 1000px;
+	opacity:0.2;
+}
+
+#allBack img {
+	width: 500px;
+	height: 400px;
 }
 
 #login {
@@ -47,28 +67,37 @@
 	top: 0;
 	width: 100%;
 	height: 100%;
-	background-color:rgba(0,152,50,0.8);
+	background-color: rgba(0, 152, 50, 0.8);
 	filter: alpha(opacity = 80);
 	z-index: 5;
 }
 </style>
 </head>
 <body>
-	<div id="back" style="display:none;"></div>
-
+	<div id="back" style="display: none;"></div>
 	<div align="center">
+		<div style="width: 1000px;">
+			<div id="allBack" align="center">
+				<img src="img/back-img.gif">
+			</div>
+		</div>
+	</div>
+	<div align="center" id="top">
 		<div style="width: 0px; height: 0px;">
 			<div id="login" align="center" style="display: none;">
-				<s:form action="login" >
+				<s:form action="login">
 					<s:textfield name="u_user.id" label="账号"></s:textfield>
 					<s:textfield name="u_user.password" label="密码"></s:textfield>
 					<s:select list="#{1:'普通用户',2:'图书管理员',3:'系统管理员'}" name="u_user.type"
 						label="角色"></s:select>
-					<%String url =request.getRequestURI();
-					session.setAttribute("prePage", url);
+					<%
+						String url = request.getRequestURI();
+						String query=request.getQueryString();
+						if(query==null)
+							query="";
+						url=url+"?"+query;
 					%>
-					<s:set name="prePage" value="#session.prePage"></s:set>
-					<s:hidden name="prePage" value="%{prePage}" ></s:hidden>
+					<s:hidden name="prePage" value="%{url}" id="parPage"></s:hidden>
 					<s:submit value="登录"></s:submit>
 				</s:form>
 				<a href="javascript:closeLogin();" id="closeLogin">关闭</a>
@@ -86,7 +115,7 @@
 				%>
 				<span
 					style="font-size: 20px; color: #FF5809; position: relative; top: 93px; text-align: right;">您还未登录，请先<a
-					href="javascript:openLogin();">登录</a>！
+					href="javascript:openLogin();" onclick="prePageStr()" onkeydown="prePageStr()">登录</a>！
 				</span>
 				<%
 					} else {
