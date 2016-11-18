@@ -123,7 +123,7 @@
 				%>
 				<span
 					style="font-size: 20px; color: red; position: relative; top: 93px; text-align: right;">
-					你好,<a href="#"><%=u_user.getName()%></a>！
+					你好,<a href="history.jsp"><%=u_user.getName()%></a>！
 				</span>
 				<%
 					}

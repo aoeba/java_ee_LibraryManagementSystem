@@ -31,6 +31,8 @@ public class CheckAction extends ActionSupport{
 		return SUCCESS;
 	}
 	public String execute() throws Exception{
+
+		System.out.println(name);
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session=request.getSession();
 		Comdb.getConn();
