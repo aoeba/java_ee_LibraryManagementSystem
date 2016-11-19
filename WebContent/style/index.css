@@ -1,0 +1,71 @@
+<<<<<<< HEAD
+=======
+@CHARSET "UTF-8";
+#all{
+
+	width:1000px;
+	margin:0 auto;
+	position:relative;
+}
+#type{
+		font-size:25px;
+		color:#5F5F5F;
+		border-spacing:0px 10px;
+		position:absolute;
+		left:70px;
+		top:20px;
+}
+#table1{
+	height:450px;
+	border-color:000000;
+	border-left-style:solid;
+	border-width:1px;
+	position:absolute;
+	left:200px;
+	top:10px;
+}
+#one{
+	position:absolute;
+	left:500px;
+	top:40px;
+}
+#one input{	
+	border:1px double black;
+	height:25px;
+	font-size:25px;
+	margin-right:100px;
+	position:relative;
+	left:-80px;
+}
+#one button{
+	font-size:25px;
+}
+#book,#book tr,#book td,th{
+	border:1px solid #636363;
+	text-align:center;
+}
+#book{
+	width:600px;
+	position:absolute;
+	left:360px;
+	top:100px;
+}
+a:link {
+ text-decoration: none;
+}
+a:visited {
+ text-decoration: none;
+}
+a:hover {
+ text-decoration: none;
+}
+a:active {
+ text-decoration: none;
+}
+#page{
+	position:relative;
+	left:670px;
+	display:inline;
+	top:450px;
+}
+>>>>>>> origin/master
