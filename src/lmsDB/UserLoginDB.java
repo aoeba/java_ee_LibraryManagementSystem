@@ -19,7 +19,8 @@ public class UserLoginDB extends Comdb {
 			sql="select password,manager_name from sys_admin where manager_id="+user.getId();
 		}
 		try {
-			getConn();
+			if(Comdb.connection==null)
+				getConn();
 			ResultSet resultSet=select(sql, null);
 			while(resultSet.next()){
 				String password=resultSet.getString("password");

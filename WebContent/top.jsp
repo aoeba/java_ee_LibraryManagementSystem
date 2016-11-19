@@ -70,6 +70,7 @@
 	background-color: rgba(0, 152, 50, 0.8);
 	filter: alpha(opacity = 80);
 	z-index: 5;
+	
 }
 </style>
 </head>

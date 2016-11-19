@@ -15,14 +15,25 @@ padding: 0;
 position: absolute;
 top: 120px;
 width: 250px;
+border: 1px solid #c00;
 }
 .left-list{
-padding-top: 50px;
-padding-bottom: 10px;
 width: 250px;
 text-align: center;
+height: 70px;
+}
+.left-text{
+cursor:pointer;
+display:inline-block;
+}
+.left-text:HOVER {
+	background-color: rgba(100,100,100,0.2);
+	border-radius:5px;
 }
 </style>
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
 	<%@include file="top.jsp"%>
@@ -30,10 +41,11 @@ text-align: center;
 		<div style="width: 1000px;">
 			<div id="left-list">
 			<table>
-				<tr><td class="left-list">普通用户管理</td></tr>
-				<tr><td class="left-list">管路员管理</td></tr>
-				<tr><td class="left-list">图书类别管理</td></tr>
-				<tr><td class="left-list">图书信息管理</td></tr>
+				<tr><td class="left-list"><div class="left-text" >个人信息</div></td></tr>
+				<tr><td class="left-list"><div class="left-text">普通用户管理</div></td></tr>
+				<tr><td class="left-list"><div class="left-text">管路员管理</div></td></tr>
+				<tr><td class="left-list"><div class="left-text">图书类别管理</div></td></tr>
+				<tr><td class="left-list"><div class="left-text">图书信息管理</div></td></tr>
 			</table>
 			</div>
 		</div>
