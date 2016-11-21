@@ -7,7 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link href="style/index.css" type="text/css" rel="stylesheet">
-<<<<<<< HEAD
 <style type="text/css">
 *{
 margin: 0;
@@ -26,16 +25,8 @@ left: 10px;
 </head>
 <body>
 	<%@include file="top.jsp"%><br>
-	<div align="center" >
-	<div style="width: 1000px;">
-=======
-
-</head>
-<body>
-	<%@include file="top.jsp"%><br>
-	<%!int curPage = 1;
+	<%int curPage = 1;
 	int pageCount;%>
->>>>>>> origin/master
 	<div id="all">
 		<table id="type">
 			<%
@@ -139,8 +130,6 @@ left: 10px;
 		<%
 			}
 		%>
-	</div>
-	</div>
 	</div>
 </body>
 </html>

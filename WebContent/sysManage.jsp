@@ -21,13 +21,14 @@ border: 1px solid #c00;
 width: 250px;
 text-align: center;
 height: 70px;
+background-color: #fcfcfc;
 }
 .left-text{
 cursor:pointer;
 display:inline-block;
 }
-.left-text:HOVER {
-	background-color: rgba(100,100,100,0.2);
+.left-list:HOVER {
+	background-color: rgba(232,232,252,1);
 	border-radius:5px;
 }
 </style>
@@ -40,7 +41,7 @@ display:inline-block;
 	<div align="center">
 		<div style="width: 1000px;">
 			<div id="left-list">
-			<table>
+			<table style="border-spacing: 0">
 				<tr><td class="left-list"><div class="left-text" >个人信息</div></td></tr>
 				<tr><td class="left-list"><div class="left-text">普通用户管理</div></td></tr>
 				<tr><td class="left-list"><div class="left-text">管路员管理</div></td></tr>
