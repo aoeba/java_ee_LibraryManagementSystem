@@ -7,25 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link href="style/index.css" type="text/css" rel="stylesheet">
-<style type="text/css">
-*{
-margin: 0;
-border: 0;
-}
-#all{
-position: absolute;
-width:1000px;
-top: 120px;
-}
-#type{
-position: absolute;
-left: 10px;
-}
-</style>
+
 </head>
 <body>
 	<%@include file="top.jsp"%><br>
-	<%int curPage = 1;
+	<%!int curPage = 1;
 	int pageCount;%>
 	<div id="all">
 		<table id="type">

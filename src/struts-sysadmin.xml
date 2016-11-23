@@ -15,5 +15,8 @@
 		<action name="login" class="action.LoginAction" method="login">
 			<result name="error">index.jsp</result>
 		</action>
+		<action name="SysAction" class="action.SysAction" method="reset">
+			<result name="sysadmin">sysadmin.jsp</result>
+		</action>
 	</package>
 </struts>    
