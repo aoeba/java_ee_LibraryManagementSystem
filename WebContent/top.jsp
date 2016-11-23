@@ -33,7 +33,7 @@
 #allBack {
 	position: absolute;
 	top: 120px;
-	z-index: -10px;
+	z-index: -10;
 	width: 1000px;
 	opacity:0.2;
 }
