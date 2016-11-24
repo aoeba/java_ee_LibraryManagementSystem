@@ -1,5 +1,8 @@
 package action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,7 +18,33 @@ import lmsDB.SysManageDB;
 import net.sf.json.JSONArray;
 
 public class SysAction {
-	
+	private File upload;
+	private String uploadFileName;
+	private String tableType;
+
+	public String getTableType() {
+		return tableType;
+	}
+
+	public void setTableType(String tableType) {
+		this.tableType = tableType;
+	}
+
+	public String getUploadFileName() {
+		return uploadFileName;
+	}
+
+	public void setUploadFileName(String uploadFileName) {
+		this.uploadFileName = uploadFileName;
+	}
+
+	public File getUpload() {
+		return upload;
+	}
+
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
 
 	public String reset() {
 		String request_type = ServletActionContext.getRequest().getParameter("type");
@@ -28,7 +57,7 @@ public class SysAction {
 			try {
 				ServletActionContext.getResponse().getWriter().write(JSONArray.fromObject(users).toString());
 			} catch (IOException e) {
-				System.out.println(request_type+"write error");
+				System.out.println(request_type + "write error");
 			}
 		}
 		if (request_type.equals("3")) {
@@ -37,7 +66,7 @@ public class SysAction {
 			try {
 				ServletActionContext.getResponse().getWriter().write(JSONArray.fromObject(bookAdmns).toString());
 			} catch (IOException e) {
-				System.out.println(request_type+"write error");
+				System.out.println(request_type + "write error");
 			}
 		}
 		if (request_type.equals("4")) {
@@ -45,7 +74,7 @@ public class SysAction {
 			try {
 				ServletActionContext.getResponse().getWriter().write(JSONArray.fromObject(types).toString());
 			} catch (IOException e) {
-				System.out.println(request_type+"write error");
+				System.out.println(request_type + "write error");
 			}
 		}
 		if (request_type.equals("5")) {
@@ -53,10 +82,33 @@ public class SysAction {
 			try {
 				ServletActionContext.getResponse().getWriter().write(JSONArray.fromObject(books).toString());
 			} catch (IOException e) {
-				System.out.println(request_type+"write error");
+				System.out.println(request_type + "write error");
 			}
 		}
 
 		return null;
 	}
+
+	/**
+	 * @tableType 1:'普通用户表',2:'图书管理员表',3:'系统管理员表',4:'科目表',5:'图书表'
+	 * @return
+	 */
+	public String updateDB(){
+		FileInputStream fis;
+		if(getUpload()!=null){
+			System.out.println("来了..."+tableType);
+			try {
+				fis=new FileInputStream(getUpload());
+				ArrayList<String> errors=SysManageDB.AddInfoByTxt(fis, Integer.parseInt(tableType));
+				ServletActionContext.getRequest().getSession().setAttribute("errors", errors);
+			} catch (FileNotFoundException e) {
+				System.out.println("文件读取流获取失败失败");
+			}
+				
+		}
+		
+
+	return"success";
+	}
+
 }

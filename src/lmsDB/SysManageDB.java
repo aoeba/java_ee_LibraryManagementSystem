@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
 
@@ -117,7 +119,7 @@ public class SysManageDB extends Comdb {
 				bookAdmns.add(bookAdmn);
 			}
 		} catch (Exception e) {
-			//bookAdmns = null;
+			// bookAdmns = null;
 		}
 		return bookAdmns;
 	}
@@ -143,7 +145,7 @@ public class SysManageDB extends Comdb {
 		}
 		return sysAdmins;
 	}
-	
+
 	public static ArrayList<Book> getAllBook() {
 		ArrayList<Book> books = new ArrayList<>();
 		try {
@@ -169,7 +171,7 @@ public class SysManageDB extends Comdb {
 		}
 		return books;
 	}
-	
+
 	public static ArrayList<Type> getAllType() {
 		ArrayList<Type> types = new ArrayList<>();
 		try {
@@ -178,7 +180,7 @@ public class SysManageDB extends Comdb {
 			String sql = "select * from type";
 			ResultSet resultSet = Comdb.select(sql, null);
 			while (resultSet.next()) {
-				Type type=new Type();
+				Type type = new Type();
 				type.setType_id(resultSet.getString("type_id"));
 				type.setType_LibraryRoom(resultSet.getString("type_LibraryRoom"));
 				type.setType_name(resultSet.getString("type_name"));
@@ -190,8 +192,7 @@ public class SysManageDB extends Comdb {
 		return types;
 	}
 
-
-	/*
+	/**
 	 * @user_type 1:user;2:book_admin;3:sys_admin
 	 */
 	public static boolean upDateInfoByIdAndType(int user_id, int user_type, String[] strings) {
@@ -213,59 +214,82 @@ public class SysManageDB extends Comdb {
 				Comdb.getConn();
 			b = Comdb.update(sql, strings);
 		} catch (Exception e) {
-			System.out.println("SysManageDB.upDateInfoByIdAndType error:"+e.getMessage());
+			System.out.println("SysManageDB.upDateInfoByIdAndType error:" + e.getMessage());
 		}
 		return b;
 	}
-	
-	/*
+
+	/**
 	 * @is txt's fileinputstream
-	 * @add_type  1:user;2:book_admin;3:sys_admin;4:book_type;5:book
+	 * @add_type 1:user;2:book_admin;3:sys_admin;4:book_type;5:book
 	 */
-	public static ArrayList<String> AddInfoByTxt(FileInputStream is,int add_type){
-		ArrayList<String> errors=new ArrayList<>();
+	public static ArrayList<String> AddInfoByTxt(FileInputStream is, int add_type) {
+		ArrayList<String> errors = new ArrayList<>();
 		try {
-			BufferedReader br=new BufferedReader(new InputStreamReader(is,"utf-8"));
-			String lineString=null;
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
+			String lineString = null;
 			String sql = null;
-			int len=0;
+			int len = 0;
 			if (add_type == 1) {
-				len=4;
-				sql = "insert into user(user_id,user_name,password,phone_number) values(?,?,?,?)" ;
+				len = 4;
+				sql = "insert into user(user_id,user_name,password,phone_number) values(?,?,?,?)";
 			}
 			if (add_type == 2) {
-				len=5;
+				len = 5;
 				sql = "insert into book_admin(manager_id,manager_name,password,phone_number,id_number) values(?,?,?,?,?)";
 			}
 			if (add_type == 3) {
-				len=5;
+				len = 5;
 				sql = "insert into sys_admin(manager_id,manager_name,password,phone_number,id_number) values(?,?,?,?,?)";
 			}
 			if (add_type == 4) {
-				len=3;
+				len = 3;
 				sql = "insert into type(type_id,type_name,type_libraryroom) values(?,?,?)";
 			}
 			if (add_type == 5) {
-				len=9;
+				len = 9;
 				sql = "insert into book(book_id,book_name,stock,price,author,register_time,press,print_time,type_id) values(?,?,?,?,?,?,?,?,?)";
 			}
-			int line=1;
-			while((lineString=br.readLine())!=null){
-				String[] strings=lineString.split("	");
-				if(strings.length!=len){
-					String error="[on "+line+" error: "+lineString+",check it's length!]";
+			int line = 1;
+			while ((lineString = br.readLine()) != null) {
+				String[] strings = lineString.split("	");
+
+				strings[0] = strings[0].trim();
+				String str2 = "";
+				if (strings[0] != null && !"".equals(strings[0])) {
+					for (int i = 0; i < strings[0].length(); i++) {
+						if (strings[0].charAt(i) >= 48 && strings[0].charAt(i) <= 57) {
+							str2 += strings[0].charAt(i);
+						}
+					}
+
+				}
+
+				strings[0] = str2;
+				for (int i = 0; i < strings.length; i++) {
+					System.out.println(strings[i]);
+				}
+				if (strings.length != len) {
+					String error = "[on " + line + " error: " + lineString + ",check it's length!]";
+					System.out.println("1 "+error);
 					errors.add(error);
 					continue;
-				}
-				if(Comdb.connection!=null)
+				} else if (Comdb.connection == null) {
+					System.out.println("2 start  ...");
 					Comdb.getConn();
-				if(!Comdb.update(sql, strings)){
-					String error="[on "+line+" error: "+lineString+",check it's content!]";
+					if (Comdb.update(sql, strings)) {
+						String error = "[on " + line + " error: " + lineString + ",check it's content!]";
+						System.out.println("2 "+error);
+						errors.add(error);
+					}
+				} else if (Comdb.update(sql, strings)) {
+					String error = "[on " + line + " error: " + lineString + ",check it's content!]";
+					System.out.println("3 "+error);
 					errors.add(error);
 				}
-					
+
 			}
-				
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
