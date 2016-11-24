@@ -17,6 +17,7 @@ padding: 0;
 position: absolute;
 top: 120px;
 width: 250px;
+height:353px;
 border: 1px solid #c00;
 }
 .left-list{
@@ -38,7 +39,7 @@ display:inline-block;
 	position: relative;
 	left:255px;
 	width: 743px;
-	height:350px;
+	height:353px;
 	border: 1px solid #c00;
 }
 
@@ -87,7 +88,6 @@ function changeContent(obj){
 			}
 			<!--3:图书管理员信息-->
 			if(requestType==3){
-				document.getElementById("text").innerHTML=eval(responContent)+"test";
 				page=1;
 				if(eval(responContent).length%15==0)
 					pageNum=eval(responContent).length/15;
@@ -144,22 +144,22 @@ function requestType3(){
 	document.getElementById("pageCtrl").style.display="";
 	document.getElementById("page_id").value=page;
 	document.getElementById("pageNum_id").innerHTML=pageNum;
-	rightTable.innerHTML="<tr style=\"background-color:#4A4AFF;\" id=\"right_tr\"><td style=\"width: 140px;\">编号</td><td style=\"width: 140px;\">图书管理员名称</td><td style=\"width: 140px;\">密码</td><td style=\"width: 140px;\">手机号</td><td style=\"width: 140px;\">身份证号</td></tr>";
+	rightTable.innerHTML="<tr style=\"background-color:#4A4AFF;\" id=\"right_tr\"><td style=\"width: 143px;\">编号</td><td style=\"width: 143px;\">图书管理员名称</td><td style=\"width: 143px;\">密码</td><td style=\"width: 143px;\">手机号</td><td style=\"width: 160px;\">身份证号</td></tr>";
 	for(var i=(page-1)*15;i<page*15;i++){
 		if(i%2==0){
 			rightTable.innerHTML+="<tr style=\"background-color:#C07AB8;\" id=\"right_tr\"><td style=\"width: 140px;\">"
-			+eval(responContent)[i].manager_id+"</td><td style=\"width: 140px;\">"
-			+eval(responContent)[i].manager_name+"</td><td style=\"width: 140px;\">"
+			+eval(responContent)[i].id+"</td><td style=\"width: 140px;\">"
+			+eval(responContent)[i].name+"</td><td style=\"width: 140px;\">"
 			+eval(responContent)[i].password+"</td><td style=\"width: 140px;\">"
-			+eval(responContent)[i].phone_number+"</td><td style=\"width: 140px;\">"
-			+eval(responContent)[i].id_number+"</td></tr>";
+			+eval(responContent)[i].phone+"</td><td style=\"width: 140px;\">"
+			+eval(responContent)[i].idnumber+"</td></tr>";
 		}else{
 			rightTable.innerHTML+="<tr style=\"background-color:#BEBEBE;\" id=\"right_tr\"><td style=\"width: 140px;\">"
-				+eval(responContent)[i].manager_id+"</td><td style=\"width: 140px;\">"
-				+eval(responContent)[i].manager_name+"</td><td style=\"width: 140px;\">"
+				+eval(responContent)[i].id+"</td><td style=\"width: 140px;\">"
+				+eval(responContent)[i].name+"</td><td style=\"width: 140px;\">"
 				+eval(responContent)[i].password+"</td><td style=\"width: 140px;\">"
-				+eval(responContent)[i].phone_number+"</td><td style=\"width: 140px;\">"
-				+eval(responContent)[i].id_number+"</td></tr>";
+				+eval(responContent)[i].phone+"</td><td style=\"width: 140px;\">"
+				+eval(responContent)[i].idnumber+"</td></tr>";
 		}
 		
 	}
@@ -284,6 +284,26 @@ function next(){
 			
 	}
 }
+
+function pageTurn(){
+	var p=document.getElementById("page_id").value;
+	if(!isNaN(p)){
+		if(p>0&&p<=pageNum){
+			page=p;
+			switch(requestType){
+				case "2":requestType2();break;
+				case "3":requestType3();break;
+				case "4":requestType4();break;
+				case "5":requestType5();break;
+				default:alert("requestType 非法！"+requestType);break;
+			}
+		}else{
+			alert("页数不存在！ 请求页:"+p+" 当前页:"+page+" 总页数:"+pageNum);
+		}
+	}else{
+		alert("请输入数字！");
+	}
+}
 </script>
 </head>
 <body>
@@ -301,12 +321,12 @@ function next(){
 			</div>
 			
 			<div id="right" align="center">
-			<span id="text"></span>
 				<table id="rightTable" style="text-align: center;">
 				
 				</table>
 				<div id="pageCtrl" style="display: none;">
-					<button onclick="previous()">上一页</button>&nbsp;第<input type="text" style="width: 15px;"  id="page_id">页,总<label id="pageNum_id"></label>页&nbsp; <button onclick="next()">下一页</button>
+					<button onclick="previous()">上一页</button>&nbsp;第<input type="text" style="width: 15px;"  id="page_id" onchange="pageTurn()">
+					页,总<label id="pageNum_id"></label>页&nbsp;<button onclick="next()">下一页</button>
 				</div>
 			</div>
 		</div>

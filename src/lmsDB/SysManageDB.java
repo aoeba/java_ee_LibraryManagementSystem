@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
+
 import bean.Book;
 import bean.BookAdmn;
 import bean.SysAdmin;
@@ -48,7 +50,7 @@ public class SysManageDB extends Comdb {
 				while (resultSet.next()) {
 					BookAdmn bookAdmn = new BookAdmn();
 					bookAdmn.setId(user_id);
-					bookAdmn.setIdnumber(Integer.parseInt(resultSet.getString("id_number")));
+					bookAdmn.setIdnumber(resultSet.getString("id_number"));
 					bookAdmn.setName(resultSet.getString("manager_id"));
 					bookAdmn.setPassword(resultSet.getString("password"));
 					bookAdmn.setPhone(resultSet.getString("phone_number"));
@@ -111,11 +113,8 @@ public class SysManageDB extends Comdb {
 				bookAdmn.setName(resultSet.getString("manager_name"));
 				bookAdmn.setPassword(resultSet.getString("password"));
 				bookAdmn.setPhone(resultSet.getString("phone_number"));
-				System.out.println("5");
-				//bookAdmn.setIdnumber(Integer.parseInt(resultSet.getString("id_number")));
-				System.out.println("6");
+				bookAdmn.setIdnumber(resultSet.getString("id_number"));
 				bookAdmns.add(bookAdmn);
-				System.out.println("password:"+bookAdmn.getPassword());
 			}
 		} catch (Exception e) {
 			//bookAdmns = null;
