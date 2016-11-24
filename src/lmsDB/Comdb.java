@@ -36,13 +36,14 @@ public class Comdb {
 		return resultSet;
 	}
 	
-	public static boolean update(String sql,String[] strings) throws SQLException{
+	public static boolean update(String sql,String[] strings) throws Exception{
+		boolean b=true;
 		PreparedStatement preparedStatement=connection.prepareStatement(sql);
 		if(strings!=null){
 			for(int i=1;i<=strings.length;i++)
 				preparedStatement.setString(i, strings[i-1]);
 		}
-		boolean b=preparedStatement.execute();
+		b=preparedStatement.execute();
 		return b;
 	}
 }

@@ -5,7 +5,7 @@ public class BookAdmn {
 	private int id;
 	private String password;
 	private String phone;
-	private int idnumber;
+	private String idnumber;
 	public String getName() {
 		return name;
 	}
@@ -30,10 +30,10 @@ public class BookAdmn {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public int getIdnumber() {
+	public String getIdnumber() {
 		return idnumber;
 	}
-	public void setIdnumber(int idnumber) {
+	public void setIdnumber(String idnumber) {
 		this.idnumber = idnumber;
 	}
 }

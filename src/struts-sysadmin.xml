@@ -18,5 +18,8 @@
 		<action name="SysAction" class="action.SysAction" method="reset">
 			<result name="sysadmin">sysadmin.jsp</result>
 		</action>
+		<action name="upload" class="action.SysAction" method="updateDB">
+			<result name="success">/uploadResult.jsp</result>
+		</action>
 	</package>
 </struts>    

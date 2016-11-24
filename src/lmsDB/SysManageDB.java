@@ -2,9 +2,14 @@ package lmsDB;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
 
 import bean.Book;
 import bean.BookAdmn;
@@ -48,7 +53,7 @@ public class SysManageDB extends Comdb {
 				while (resultSet.next()) {
 					BookAdmn bookAdmn = new BookAdmn();
 					bookAdmn.setId(user_id);
-					bookAdmn.setIdnumber(Integer.parseInt(resultSet.getString("id_number")));
+					bookAdmn.setIdnumber(resultSet.getString("id_number"));
 					bookAdmn.setName(resultSet.getString("manager_id"));
 					bookAdmn.setPassword(resultSet.getString("password"));
 					bookAdmn.setPhone(resultSet.getString("phone_number"));
@@ -111,14 +116,11 @@ public class SysManageDB extends Comdb {
 				bookAdmn.setName(resultSet.getString("manager_name"));
 				bookAdmn.setPassword(resultSet.getString("password"));
 				bookAdmn.setPhone(resultSet.getString("phone_number"));
-				System.out.println("5");
-				//bookAdmn.setIdnumber(Integer.parseInt(resultSet.getString("id_number")));
-				System.out.println("6");
+				bookAdmn.setIdnumber(resultSet.getString("id_number"));
 				bookAdmns.add(bookAdmn);
-				System.out.println("password:"+bookAdmn.getPassword());
 			}
 		} catch (Exception e) {
-			//bookAdmns = null;
+			// bookAdmns = null;
 		}
 		return bookAdmns;
 	}
@@ -144,7 +146,7 @@ public class SysManageDB extends Comdb {
 		}
 		return sysAdmins;
 	}
-	
+
 	public static ArrayList<Book> getAllBook() {
 		ArrayList<Book> books = new ArrayList<>();
 		try {
@@ -170,7 +172,7 @@ public class SysManageDB extends Comdb {
 		}
 		return books;
 	}
-	
+
 	public static ArrayList<Type> getAllType() {
 		ArrayList<Type> types = new ArrayList<>();
 		try {
@@ -179,7 +181,7 @@ public class SysManageDB extends Comdb {
 			String sql = "select * from type";
 			ResultSet resultSet = Comdb.select(sql, null);
 			while (resultSet.next()) {
-				Type type=new Type();
+				Type type = new Type();
 				type.setType_id(resultSet.getString("type_id"));
 				type.setType_LibraryRoom(resultSet.getString("type_LibraryRoom"));
 				type.setType_name(resultSet.getString("type_name"));
@@ -191,8 +193,7 @@ public class SysManageDB extends Comdb {
 		return types;
 	}
 
-
-	/*
+	/**
 	 * @user_type 1:user;2:book_admin;3:sys_admin
 	 */
 	public static boolean upDateInfoByIdAndType(int user_id, int user_type, String[] strings) {
@@ -214,62 +215,86 @@ public class SysManageDB extends Comdb {
 				Comdb.getConn();
 			b = Comdb.update(sql, strings);
 		} catch (Exception e) {
-			System.out.println("SysManageDB.upDateInfoByIdAndType error:"+e.getMessage());
+			System.out.println("SysManageDB.upDateInfoByIdAndType error:" + e.getMessage());
 		}
 		return b;
 	}
-	
-	/*
+
+	/**
+	 * @throws Exception
+	 * @throws IOException
 	 * @is txt's fileinputstream
-	 * @add_type  1:user;2:book_admin;3:sys_admin;4:book_type;5:book
+	 * @add_type 1:user;2:book_admin;3:sys_admin;4:book_type;5:book
 	 */
-	public static ArrayList<String> AddInfoByTxt(FileInputStream is,int add_type){
-		ArrayList<String> errors=new ArrayList<>();
-		try {
-			BufferedReader br=new BufferedReader(new InputStreamReader(is,"utf-8"));
-			String lineString=null;
-			String sql = null;
-			int len=0;
-			if (add_type == 1) {
-				len=4;
-				sql = "insert into user(user_id,user_name,password,phone_number) values(?,?,?,?)" ;
-			}
-			if (add_type == 2) {
-				len=5;
-				sql = "insert into book_admin(manager_id,manager_name,password,phone_number,id_number) values(?,?,?,?,?)";
-			}
-			if (add_type == 3) {
-				len=5;
-				sql = "insert into sys_admin(manager_id,manager_name,password,phone_number,id_number) values(?,?,?,?,?)";
-			}
-			if (add_type == 4) {
-				len=3;
-				sql = "insert into type(type_id,type_name,type_libraryroom) values(?,?,?)";
-			}
-			if (add_type == 5) {
-				len=9;
-				sql = "insert into book(book_id,book_name,stock,price,author,register_time,press,print_time,type_id) values(?,?,?,?,?,?,?,?,?)";
-			}
-			int line=1;
-			while((lineString=br.readLine())!=null){
-				String[] strings=lineString.split("	");
-				if(strings.length!=len){
-					String error="[on "+line+" error: "+lineString+",check it's length!]";
-					errors.add(error);
-					continue;
-				}
-				if(Comdb.connection!=null)
-					Comdb.getConn();
-				if(!Comdb.update(sql, strings)){
-					String error="[on "+line+" error: "+lineString+",check it's content!]";
-					errors.add(error);
-				}
-					
-			}
-				
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static ArrayList<String> AddInfoByTxt(FileInputStream is, int add_type) throws IOException, Exception {
+		ArrayList<String> errors = new ArrayList<>();
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
+		String lineString = null;
+		String sql = null;
+		int len = 0;
+		if (add_type == 1) {
+			len = 4;
+			sql = "insert into user(user_id,user_name,password,phone_number) values(?,?,?,?)";
 		}
-		return null;
+		if (add_type == 2) {
+			len = 5;
+			sql = "insert into book_admin(manager_id,manager_name,password,phone_number,id_number) values(?,?,?,?,?)";
+		}
+		if (add_type == 3) {
+			len = 5;
+			sql = "insert into sys_admin(manager_id,manager_name,password,phone_number,id_number) values(?,?,?,?,?)";
+		}
+		if (add_type == 4) {
+			len = 3;
+			sql = "insert into type(type_id,type_name,type_libraryroom) values(?,?,?)";
+		}
+		if (add_type == 5) {
+			len = 9;
+			sql = "insert into book(book_id,book_name,stock,price,author,register_time,press,print_time,type_id) values(?,?,?,?,?,?,?,?,?)";
+		}
+		int line = 1;
+		while ((lineString = br.readLine()) != null) {
+			String[] strings = lineString.split("	");
+
+			strings[0] = strings[0].trim();
+			String str2 = "";
+			if (strings[0] != null && !"".equals(strings[0])) {
+				for (int i = 0; i < strings[0].length(); i++) {
+					if (strings[0].charAt(i) >= 48 && strings[0].charAt(i) <= 57) {
+						str2 += strings[0].charAt(i);
+					}
+				}
+
+			}
+
+			strings[0] = str2;
+			if (strings.length != len) {
+				String error = "[on " + line + " error: " + lineString + ",check it's content!]";
+				errors.add(error);
+				continue;
+			} else if (Comdb.connection == null) {
+				Comdb.getConn();
+				try {
+					if (Comdb.update(sql, strings)) {
+						String error = "[on " + line + " error: " + lineString + ",check it's content!]";
+						errors.add(error);
+					}
+				} catch (Exception e) {
+					errors.add("[on " + line + " error: " + lineString+","+e.getMessage()+ ",check it's content!]");
+				}
+			} else
+				try {
+					if (Comdb.update(sql, strings)) {
+						String error = "[on " + line + " error: " + lineString + ",check it's content!]";
+						errors.add(error);
+					}
+				} catch (Exception e) {
+					errors.add("[on " + line + " error: " + lineString+","+e.getMessage()+ ",check it's content!]");
+				}
+			line++;
+		}
+
+		return errors;
 	}
 }
