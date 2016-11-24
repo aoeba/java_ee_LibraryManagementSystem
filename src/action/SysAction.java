@@ -96,10 +96,14 @@ public class SysAction {
 	public String updateDB(){
 		FileInputStream fis;
 		if(getUpload()!=null){
-			System.out.println("来了..."+tableType);
 			try {
 				fis=new FileInputStream(getUpload());
-				ArrayList<String> errors=SysManageDB.AddInfoByTxt(fis, Integer.parseInt(tableType));
+				ArrayList<String> errors = null;
+				try {
+					errors = SysManageDB.AddInfoByTxt(fis, Integer.parseInt(tableType));
+				} catch (Exception e) {
+					errors.add(e.getMessage());
+				}
 				ServletActionContext.getRequest().getSession().setAttribute("errors", errors);
 			} catch (FileNotFoundException e) {
 				System.out.println("文件读取流获取失败失败");

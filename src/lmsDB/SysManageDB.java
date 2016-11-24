@@ -2,6 +2,7 @@ package lmsDB;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -220,79 +221,80 @@ public class SysManageDB extends Comdb {
 	}
 
 	/**
+	 * @throws Exception
+	 * @throws IOException
 	 * @is txt's fileinputstream
 	 * @add_type 1:user;2:book_admin;3:sys_admin;4:book_type;5:book
 	 */
-	public static ArrayList<String> AddInfoByTxt(FileInputStream is, int add_type) {
+	public static ArrayList<String> AddInfoByTxt(FileInputStream is, int add_type) throws IOException, Exception {
 		ArrayList<String> errors = new ArrayList<>();
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
-			String lineString = null;
-			String sql = null;
-			int len = 0;
-			if (add_type == 1) {
-				len = 4;
-				sql = "insert into user(user_id,user_name,password,phone_number) values(?,?,?,?)";
-			}
-			if (add_type == 2) {
-				len = 5;
-				sql = "insert into book_admin(manager_id,manager_name,password,phone_number,id_number) values(?,?,?,?,?)";
-			}
-			if (add_type == 3) {
-				len = 5;
-				sql = "insert into sys_admin(manager_id,manager_name,password,phone_number,id_number) values(?,?,?,?,?)";
-			}
-			if (add_type == 4) {
-				len = 3;
-				sql = "insert into type(type_id,type_name,type_libraryroom) values(?,?,?)";
-			}
-			if (add_type == 5) {
-				len = 9;
-				sql = "insert into book(book_id,book_name,stock,price,author,register_time,press,print_time,type_id) values(?,?,?,?,?,?,?,?,?)";
-			}
-			int line = 1;
-			while ((lineString = br.readLine()) != null) {
-				String[] strings = lineString.split("	");
 
-				strings[0] = strings[0].trim();
-				String str2 = "";
-				if (strings[0] != null && !"".equals(strings[0])) {
-					for (int i = 0; i < strings[0].length(); i++) {
-						if (strings[0].charAt(i) >= 48 && strings[0].charAt(i) <= 57) {
-							str2 += strings[0].charAt(i);
-						}
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
+		String lineString = null;
+		String sql = null;
+		int len = 0;
+		if (add_type == 1) {
+			len = 4;
+			sql = "insert into user(user_id,user_name,password,phone_number) values(?,?,?,?)";
+		}
+		if (add_type == 2) {
+			len = 5;
+			sql = "insert into book_admin(manager_id,manager_name,password,phone_number,id_number) values(?,?,?,?,?)";
+		}
+		if (add_type == 3) {
+			len = 5;
+			sql = "insert into sys_admin(manager_id,manager_name,password,phone_number,id_number) values(?,?,?,?,?)";
+		}
+		if (add_type == 4) {
+			len = 3;
+			sql = "insert into type(type_id,type_name,type_libraryroom) values(?,?,?)";
+		}
+		if (add_type == 5) {
+			len = 9;
+			sql = "insert into book(book_id,book_name,stock,price,author,register_time,press,print_time,type_id) values(?,?,?,?,?,?,?,?,?)";
+		}
+		int line = 1;
+		while ((lineString = br.readLine()) != null) {
+			String[] strings = lineString.split("	");
+
+			strings[0] = strings[0].trim();
+			String str2 = "";
+			if (strings[0] != null && !"".equals(strings[0])) {
+				for (int i = 0; i < strings[0].length(); i++) {
+					if (strings[0].charAt(i) >= 48 && strings[0].charAt(i) <= 57) {
+						str2 += strings[0].charAt(i);
 					}
-
 				}
 
-				strings[0] = str2;
-				for (int i = 0; i < strings.length; i++) {
-					System.out.println(strings[i]);
-				}
-				if (strings.length != len) {
-					String error = "[on " + line + " error: " + lineString + ",check it's length!]";
-					System.out.println("1 "+error);
-					errors.add(error);
-					continue;
-				} else if (Comdb.connection == null) {
-					System.out.println("2 start  ...");
-					Comdb.getConn();
+			}
+
+			strings[0] = str2;
+			if (strings.length != len) {
+				String error = "[on " + line + " error: " + lineString + ",check it's content!]";
+				errors.add(error);
+				continue;
+			} else if (Comdb.connection == null) {
+				Comdb.getConn();
+				try {
 					if (Comdb.update(sql, strings)) {
 						String error = "[on " + line + " error: " + lineString + ",check it's content!]";
-						System.out.println("2 "+error);
 						errors.add(error);
 					}
-				} else if (Comdb.update(sql, strings)) {
-					String error = "[on " + line + " error: " + lineString + ",check it's content!]";
-					System.out.println("3 "+error);
-					errors.add(error);
+				} catch (Exception e) {
+					errors.add("[on " + line + " error: " + lineString+","+e.getMessage()+ ",check it's content!]");
 				}
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
+			} else
+				try {
+					if (Comdb.update(sql, strings)) {
+						String error = "[on " + line + " error: " + lineString + ",check it's content!]";
+						errors.add(error);
+					}
+				} catch (Exception e) {
+					errors.add("[on " + line + " error: " + lineString+","+e.getMessage()+ ",check it's content!]");
+				}
+			line++;
 		}
-		return null;
+
+		return errors;
 	}
 }

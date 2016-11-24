@@ -9,6 +9,9 @@
 </head>
 <body>
 	<%@include file="top.jsp"%>
+	<%	if(u_user==null||u_user.getType()==1||u_user.getType()==2){
+			response.sendRedirect("index.jsp");
+		} %>
 	<div align="center">
 		<div style="width: 1000px; height: 355px; border: 1px solid #c00;">
 			
@@ -30,9 +33,10 @@
 			<s:form action="upload" enctype="multipart/form-data">
 				<s:file name="upload" label="上传的文件"></s:file>
 				<s:select list="#{1:'普通用户表',2:'图书管理员表',3:'系统管理员表',4:'科目表',5:'图书表'}" name="tableType"
-						label="角色"></s:select>
+						label="更新表类别"></s:select>
 				<s:submit value="submit"></s:submit>
 			</s:form>
+			<a href="sysManage.jsp">返回管理界面</a>
 		</div>
 	</div>
 </body>

@@ -308,6 +308,9 @@ function pageTurn(){
 </head>
 <body>
 	<%@include file="top.jsp"%>
+	<%	if(u_user==null||u_user.getType()==1||u_user.getType()==2){
+			response.sendRedirect("index.jsp");
+		} %>
 	<div align="center">
 		<div style="width: 1000px;" align="left">
 			<div id="left-list">

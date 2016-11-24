@@ -37,7 +37,6 @@ public class Comdb {
 	}
 	
 	public static boolean update(String sql,String[] strings) throws Exception{
-		System.out.println(sql);
 		boolean b=true;
 		PreparedStatement preparedStatement=connection.prepareStatement(sql);
 		if(strings!=null){
