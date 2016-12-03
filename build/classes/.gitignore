@@ -2,4 +2,8 @@
 /bean/
 /interceptor/
 /lmsDB/
+/struts-bookadmin.xml
+/struts-sysadmin.xml
+/struts-user.xml
+/struts.xml
 /test/

@@ -14,14 +14,18 @@ import lmsDB.Comdb;
 
 public class BackAction extends ActionSupport{
 	public String execute() throws Exception{
+		if(Comdb.connection!=null)
 		Comdb.getConn();
 		HttpServletRequest request=ServletActionContext.getRequest();
-		String ID=request.getParameter("ID");
+		int id=Integer.parseInt(request.getParameter("id"));
+		System.out.println(id);
 		Date ca=Calendar.getInstance().getTime();
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd-hh-mm");
 		String time=sdf.format(ca);
-		String sql="update borrow_list set BACK_TIME='"+time+"' where ID="+ID;
-		Comdb.update(sql, null);
+		String sql="update borrow_list set BACK_TIME='"+time+"'"+",back_stat=3 where ID="+id;
+		boolean f= Comdb.update(sql, null);
+		if(f=false)
+			return ERROR;
 		return SUCCESS;
 	} 
 }

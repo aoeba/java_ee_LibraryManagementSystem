@@ -6,14 +6,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>sos图书管理系统-文件处理结果</title>
 </head>
 <body>
 <s:if test="#session.errors[0]==null">
 没有错。。
 </s:if>
 <%ArrayList<String> errors=(ArrayList)session.getAttribute("errors");  
-if(errors.size()==0){%>	
+if(errors==null||errors.size()==0){%>	
 	导入成功。。。
 <%}else{%>
 <s:iterator value="#session.errors" var="error">

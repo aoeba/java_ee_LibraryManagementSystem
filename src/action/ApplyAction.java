@@ -19,6 +19,7 @@ import lmsDB.Comdb;
 public class ApplyAction extends ActionSupport{
 	public int id2=0;
 	public String execute() throws Exception{
+		if(Comdb.connection!=null)
 		Comdb.getConn();
 		HttpServletRequest request=ServletActionContext.getRequest();
 		String user_id=request.getParameter("user_id");
@@ -31,10 +32,10 @@ public class ApplyAction extends ActionSupport{
 			id2=1+Integer.parseInt(aString);
 			Date ca=Calendar.getInstance().getTime();
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd-hh-mm");
-			String sql="INSERT INTO borrow_list VALUES(?,?,?,?,?,?)";
+			String sql="INSERT INTO borrow_list VALUES(?,?,?,?,?,?,?)";
 			String id1=String.valueOf(id2);
 			String time=sdf.format(ca);
-			String[] strings={id1,time,null,user_id,"111111",book_id};
+			String[] strings={id1,time,null,user_id,"0",book_id,"0"};
 			Comdb.update(sql, strings);
 		}
 		return SUCCESS;

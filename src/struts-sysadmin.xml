@@ -13,7 +13,8 @@
 			<result name="success" type="redirectAction">success</result>
 		</action>
 		<action name="login" class="action.LoginAction" method="login">
-			<result name="error">index.jsp</result>
+			<result name="error">loginError.jsp</result>
+			<result name="success">index.jsp</result>
 		</action>
 		<action name="SysAction" class="action.SysAction" method="reset">
 			<result name="sysadmin">sysadmin.jsp</result>

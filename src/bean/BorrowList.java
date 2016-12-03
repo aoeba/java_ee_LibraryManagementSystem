@@ -9,6 +9,13 @@ public class BorrowList {
 	private int userid;
 	private int managerid;
 	private int bookid;
+	private int backstat;
+	public int getBackstat() {
+		return backstat;
+	}
+	public void setBackstat(int backstat) {
+		this.backstat = backstat;
+	}
 	public int getId() {
 		return id;
 	}

@@ -35,6 +35,7 @@ public class CheckAction extends ActionSupport{
 		System.out.println(name);
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session=request.getSession();
+		if(Comdb.connection!=null)
 		Comdb.getConn();
 		String sql="select * from book where book_name like '%"+name+"%'";
 		ResultSet rs1= Comdb.select(sql, null);

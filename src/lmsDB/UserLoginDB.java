@@ -12,10 +12,10 @@ public class UserLoginDB extends Comdb {
 		if(user.getType()==1){
 			sql="select password,user_name from user where user_id="+user.getId();
 		}
-		if(user.getType()==2){
+		else if(user.getType()==2){
 			sql="select password,manager_name from book_admin where manager_id="+user.getId();
 		}
-		if(user.getType()==3){
+		else if(user.getType()==3){
 			sql="select password,manager_name from sys_admin where manager_id="+user.getId();
 		}
 		try {
@@ -33,7 +33,6 @@ public class UserLoginDB extends Comdb {
 				}
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return isLogin;

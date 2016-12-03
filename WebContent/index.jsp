@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>sos图书管理系统</title>
 <link href="style/index.css" type="text/css" rel="stylesheet">
 
 </head>
@@ -15,7 +15,7 @@
 	int pageCount;%>
 	<div id="all">
 		<table id="type">
-			<%
+			<% 
 				Comdb.getConn();
 				ResultSet rs = Comdb.select("select type_name,type_id from type", null);
 				while (rs.next()) {
@@ -54,6 +54,7 @@
 					<th>是否申请</th>
 				</tr>
 				<%
+					rs1.last();
 					int size = rs1.getRow();
 						pageCount = (size % 10 == 0) ? (size / 10) : (size / 10 + 1);
 						String tmp = request.getParameter("curPage");
@@ -63,7 +64,7 @@
 						curPage = Integer.parseInt(tmp);
 						if (curPage >= pageCount)
 							curPage = pageCount;
-						boolean flag = rs.absolute((curPage - 1) * 10 + 1);
+						boolean flag = rs1.absolute((curPage - 1) * 10 + 1);
 						int count = 0;
 						while (rs1.next()) {
 							if (count >= 10)
@@ -92,7 +93,7 @@
 					%>
 				</tr>
 				<%
-					}
+					count++;}
 				%>
 
 			</table>
@@ -103,19 +104,24 @@
 				} else {
 			%>
 			<div id="page">
-				<a href="index.jsp?curPage=1">首页</a> <a
-					href="index.jsp?curPage=<%=curPage - 1%>">上一页</a> <a
-					href="index.jsp?curPage=<%=curPage + 1%>">下一页</a> <a
+				<a href="index.jsp?curPage=1">首页</a> 
+				<% if(curPage==1){ %><a
+					href="#">上一页</a><%}else{ %>
+				<a
+					href="index.jsp?curPage=<%=curPage - 1%>">上一页</a><%}if(curPage==pageCount){ %>
+					<a
+					href="#">下一页</a>
+					<%}else{ %>
+					 <a
+					href="index.jsp?curPage=<%=curPage + 1%>">下一页</a><%} %> <a
 					href="index.jsp?curPage=<%=pageCount%>">尾页</a> 第<%=curPage%>页/共<%=pageCount%>页
 			</div>
+		
+		<%
+			}}
+
+		%>
 		</div>
-		<%
-			}
-			} else {
-		%>
-		<%
-			}
-		%>
 	</div>
 </body>
 </html>
