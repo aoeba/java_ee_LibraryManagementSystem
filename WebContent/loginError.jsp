@@ -4,9 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>sos图书管理系统</title>
+<title>loginError</title>
 </head>
 <body>
-	<h1>未找到相关书籍或遇到其他错误<a href="index.jsp">点击返回</a></h1>
+<div align="center">
+		<div style="width: 1000px;position: relative;top: 100px;">
+		登录失败，请检查输入是否正确！<br>
+		<a href="index.jsp">返回首页</a>
+		</div>
+		</div>
 </body>
 </html>

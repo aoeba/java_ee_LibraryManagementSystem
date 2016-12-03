@@ -6,7 +6,19 @@
 		<result name="success">/index.jsp</result>
 		<result name="error">/error.jsp</result>
 		</action>
-		<action name="*" class="action.CheckAction" method="{1}">
+		<action name="checktype" class="action.CheckAction" method="checktype">
+		<result name="success">/index.jsp</result>
+		<result name="error">/error.jsp</result>
+		</action>
+		<action name="back" class="action.BackAction">
+		<result name="success">/history.jsp</result>
+		<result name="error">/error.jsp</result>
+		</action>
+		<action name="update" class="action.updateAction">
+		<result name="success">/history.jsp</result>
+		<result name="error">/error.jsp</result>
+		</action>
+		<action name="apply" class="action.ApplyAction">
 		<result name="success">/index.jsp</result>
 		<result name="error">/error.jsp</result>
 		</action>

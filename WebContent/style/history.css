@@ -27,12 +27,44 @@
 	text-align:center;
 }
 #history{
-	width:600px;
+	width:650px;
 	position:absolute;
-	left:360px;
-	top:100px;
+	left:320px;
+	top:10px;
 }
 #history caption{
 	border:1px double #636363;
 	text-align:center;
 }
+#page{
+	position:relative;
+	left:670px;
+	display:inline;
+	top:450px;
+}
+#update {
+	display:;
+	position: absolute;
+	top: 30%;
+	width: 360px;
+	height: 115px;
+	background-color: #ccc;
+	width: 260px;
+	z-index: 10;
+}
+
+#closeLogin {
+	position: absolute;
+	right: 10px;
+	top: 7px;
+}
+
+#back1 {
+	POSITION: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 152, 50, 0.8);
+	filter: alpha(opacity = 80);
+	z-index: 5;

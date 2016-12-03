@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>sos图书管理系统</title>
 <script type="text/javascript">
 	function openLogin() {
 		document.getElementById("login").style.display = "";
@@ -124,7 +124,7 @@
 				%>
 				<span
 					style="font-size: 20px; color: red; position: relative; top: 93px; text-align: right;">
-					你好,<a href="history.jsp"><%=u_user.getName()%></a>！
+					你好,<a href="history.jsp"><%=u_user.getName()%></a>！<a href="out.jsp">退出</a>
 				</span>
 				<%
 					}
@@ -134,7 +134,7 @@
 				%>
 				<span
 					style="font-size: 20px; color: red; position: relative; top: 93px; text-align: right;">
-					你好,<%=u_user.getName()%>,<a href="#">管理后台</a>！
+					你好,<%=u_user.getName()%>,<a href="manager.jsp">管理后台</a>！<a href="out.jsp">退出</a>
 				</span>
 				<%
 					}
@@ -144,7 +144,7 @@
 				%>
 				<span
 					style="font-size: 20px; color: red; position: relative; top: 93px; text-align: right;">
-					你好,<%=u_user.getName()%>,<a href="sysManage.jsp">管理后台</a>！
+					你好,<%=u_user.getName()%>,<a href="sysManage.jsp">管理后台</a>！<a href="out.jsp">退出</a>
 				</span>
 				<%
 					}

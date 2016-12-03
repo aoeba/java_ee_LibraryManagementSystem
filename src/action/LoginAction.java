@@ -48,13 +48,13 @@ public class LoginAction extends ActionSupport{
 	}
 	
 	public String login() throws IOException{
-		System.out.println(u_user.getId()+" "+u_user.getType()+" "+prePage);
 		if(UserLoginDB.getLoginResult(u_user)){
 			ActionContext.getContext().getSession().put("u_user", u_user);
 			if(prePage!=null){
 				HttpServletResponse response = ServletActionContext.getResponse();
 				response.sendRedirect(prePage); 
-			}
+			}else
+				return "success";
 		}
 		return "error";
 	}
